@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+<div class="container">
+
+    <p>
+
+  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Table
+  </button>
+  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >
+    Form
+  </button>
+
+ 
+</p>
+
+<div class="collapse" id="collapseExample">
+     <!--  Table -->
+  <div class="card card-body">
+    <h1 style="text-align: center;">TABLE</h1>
+    <br>
+    <table class="table table-striped">
+  <thead>
+    <tr>
+
+      <th scope="col">Id</th>
+      <th scope="col">Username</th>
+      <th scope="col">CATEGORY</th>
+      
+      <th scope="col">Delete</th>
+     </tr>
+  </thead>
+  <tbody id='tbody'>
+    
+    <!-- <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+
+    </tr> -->
+  
+  </tbody>
+</table>
+
+  </div>
+</div>
+      <!-- Form -->
+<div class="collapse" id="collapseExample2">
+  <div class="card card-body">
+       <!--  <form id="form">
+         
+
+              <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" id="username" name='username' placeholder="Name">
+                
+              </div>
+              <div class="form-group">
+                <label >Category</label>
+                <input class="form-control" id="category" name='category' placeholder="Category">
+                
+              </div>
+
+            
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+        </form> -->
+        <form id="form">
+          <div class="form-group">
+                <label for="input2">Username</label>
+                <input  class="form-control" name='username' id="username" placeholder="Username">
+              </div>
+
+
+              <div class="form-group">
+                <label for="input1">Category</label>
+                <input class="form-control" id="category" name='category' placeholder="Category">
+                
+              </div>
+              
+           
+              
+              <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+
+  </div>
+</div>
+
+</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   <script type="text/javascript">
+    
+            var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+   
+                if(stored_list==null){
+                  
+                  stored_list=[]
+                }else{
+                    var len=stored_list.length;
+                    
+                   
+                    for(i=0;i<len;i++){
+                        var temp_dict=stored_list[i];
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        document.getElementById('tbody').innerHTML+=str;
+
+                    }
+                }
+                var len=stored_list.length;
+       
+            
+            
+
+  
+
+            // $('.del').click(function() {
+
+            //    var index=$(this).attr('id');
+            //    console.log('hello');
+            //     console.log(stored_list);
+               
+
+            //    // var rem=stored_list.spliced(index,1);
+            //    //  console.log(stored_list);
+                
+            //    // document.getElementById('tbody').innerHTML='';
+            //    // var len=stored_list.length;
+             
+            //    // for(i=0;i<len;i++){
+            //    //          var temp_dict=stored_list[i];
+            //    //          var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+            //    //          document.getElementById('tbody').innerHTML+=str;
+
+            //    //  }
+            //    //  window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+            // });
+
+            eventListeners();
+            function eventListeners(){
+              document.querySelector('form').addEventListener('submit',addFun);
+               // document.getElementsByClassName('del').addEventListener('click',remove);
+            }
+
+            function addFun(e){
+                e.preventDefault();
+                var values = $('#form').serializeArray();
+             
+                var str_len=(len+1).toString();
+                var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td>+<td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
+                document.getElementById('tbody').innerHTML+=str;
+                
+                var dict={'username':values[0]['value'],'category':values[1]['value']};
+               
+                stored_list.push(dict);
+                window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+                len++;
+            }
+            $('.del').click(remove);
+            function remove(){
+              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+   
+               var index=$(this).attr('id');
+               console.log(index,"index hai");
+                console.log(stored_list);
+               
+
+               var rem=stored_list.splice(index-1,1);
+                console.log(stored_list);
+                
+               document.getElementById('tbody').innerHTML='';
+               var len=stored_list.length;
+             
+               for(i=0;i<len;i++){
+                        var temp_dict=stored_list[i];
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        document.getElementById('tbody').innerHTML+=str;
+
+                }
+                window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+            }
+
+
+   </script>
+
+  </body>
+</html>
