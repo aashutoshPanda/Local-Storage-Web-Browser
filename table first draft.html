@@ -141,13 +141,13 @@
                    
                     for(i=0;i<len;i++){
                         var temp_dict=stored_list[i];
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
                         document.getElementById('tbody').innerHTML+=str;
 
                     }
                 }
               
-       
+       console.log(stored_list);
             
             var str_cat='';
             for(i=0;i<len;i++){
@@ -186,9 +186,9 @@
 
                 e.preventDefault();
                 var values = $('#form').serializeArray();
-             
+              len=stored_list.length;
                 var str_len=(len).toString();
-                var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td>+<td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
+                var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td><td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
                 document.getElementById('tbody').innerHTML+=str;
                 
                 var dict={'username':values[0]['value'],'category':values[1]['value']};
@@ -215,7 +215,7 @@
              
                for(i=0;i<len;i++){
                         var temp_dict=stored_list[i];
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
                         document.getElementById('tbody').innerHTML+=str;
 
                 }
@@ -234,7 +234,7 @@
               for(i=0;i<len;i++){
                     var temp_dict=stored_list[i];
                     if(temp_dict['category']==cat_selected){
-                        var str=`<tr><th scope="row">`+(count+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        var str=`<tr><th scope="row">`+(count+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
                         document.getElementById('tbody').innerHTML+=str;
                         count++;
 
