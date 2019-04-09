@@ -22,6 +22,10 @@
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >
     Form
   </button>
+  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" >
+    Categories
+  </button>
+
 
  
 </p>
@@ -59,6 +63,7 @@
       <!-- Form -->
 <div class="collapse" id="collapseExample2">
   <div class="card card-body">
+    <h1 style="text-align: center;">FORM</h1>
        <!--  <form id="form">
          
 
@@ -100,6 +105,22 @@
   </div>
 </div>
 
+<div class="collapse" id="collapseExample3" >
+  <h1 style="text-align: center;">CATEGORIES</h1>
+  <form id="cat_form">
+        <!-- <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+              <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+      </div>
+      <div class="custom-control custom-radio">
+              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+              <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+      </div> -->
+        
+         <button type="submit" class="btn btn-primary" id="cat-button">Submit</button>   
+  </form>
+</div>
+
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -107,14 +128,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
    <script type="text/javascript">
-    
+              // window.localStorage.clear();
+              var len;
             var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
    
                 if(stored_list==null){
                   
                   stored_list=[]
                 }else{
-                    var len=stored_list.length;
+                    len=stored_list.length;
                     
                    
                     for(i=0;i<len;i++){
@@ -124,11 +146,17 @@
 
                     }
                 }
-                var len=stored_list.length;
+              
        
             
-            
-
+            var str_cat='';
+            for(i=0;i<len;i++){
+              var temp_dict=stored_list[i];
+              str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+temp_dict['category']+`">
+          <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+temp_dict['category']+`</h3></label><br></div>`
+            }
+            document.getElementById('collapseExample3').innerHTML+=str_cat;
+            // console.log(str_cat);
   
 
             // $('.del').click(function() {
@@ -153,17 +181,13 @@
             //    //  window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
             // });
 
-            eventListeners();
-            function eventListeners(){
-              document.querySelector('form').addEventListener('submit',addFun);
-               // document.getElementsByClassName('del').addEventListener('click',remove);
-            }
-
+            $('#form').submit(addFun);
             function addFun(e){
+
                 e.preventDefault();
                 var values = $('#form').serializeArray();
              
-                var str_len=(len+1).toString();
+                var str_len=(len).toString();
                 var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td>+<td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
                 document.getElementById('tbody').innerHTML+=str;
                 
@@ -175,15 +199,16 @@
             }
             $('.del').click(remove);
             function remove(){
+              console.log("hi");
               var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
    
                var index=$(this).attr('id');
-               console.log(index,"index hai");
-                console.log(stored_list);
+               // console.log(index,"index hai");
+               //  console.log(stored_list);
                
 
                var rem=stored_list.splice(index-1,1);
-                console.log(stored_list);
+              
                 
                document.getElementById('tbody').innerHTML='';
                var len=stored_list.length;
@@ -196,7 +221,29 @@
                 }
                 window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
             }
+            $('#cat-button').click(function(click) {
+              click.preventDefault();
+              console.log("hello");
+              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+              document.getElementById('tbody').innerHTML='';
+              
+              var cat_selected=$("input[name='customRadio']:checked").val();
+              len=stored_list.length;
+                    
+                   
+              for(i=0;i<len;i++){
+                    var temp_dict=stored_list[i];
+                    if(temp_dict['category']==cat_selected){
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        document.getElementById('tbody').innerHTML+=str;
 
+                }
+              }
+            
+          
+
+            }); 
+              
 
    </script>
 
