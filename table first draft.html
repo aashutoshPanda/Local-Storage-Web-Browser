@@ -23,17 +23,20 @@
     Form
   </button>
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" >
-    Categories
+    Filter by Categories
   </button>
-
+  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4" >
+  Update
+  </button>
 
  
 </p>
 
-<div class="collapse" id="collapseExample">
+<div class="collapse  show" id="collapseExample">
      <!--  Table -->
   <div class="card card-body">
     <h1 style="text-align: center;">TABLE</h1>
+    <button  class="btn btn-primary btn-lg" id="remove_filter">Remove category filter</button>
     <br>
     <table class="table table-striped">
   <thead>
@@ -122,6 +125,38 @@
 </div>
 
 </div>
+
+<div class="collapse" id="collapseExample4">
+  <div class="container">
+   <form id="update_form">
+        <div class="form-group row">
+          <label  class="col-sm-2 col-form-label">Enter Id to Update</label>
+          <div class="col-sm-10">
+            <input type="number" class="form-control" name='Id' placeholder="Id">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label  class="col-sm-2 col-form-label">New Username</label>
+          <div class="col-sm-10">
+            <input  class="form-control"  name=' new_username' placeholder="Username">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">New Category</label>
+          <div class="col-sm-10">
+            <input  class="form-control" name='new_category' placeholder="Category">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -129,8 +164,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
    <script type="text/javascript">
               // window.localStorage.clear();
+
+
               var len;
             var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+              // console.log(stored_list);
    
                 if(stored_list==null){
                   
@@ -147,8 +185,10 @@
                     }
                 }
               
-       console.log(stored_list);
-            
+   
+            $("#remove_filter").click(function() {
+                  location.reload()
+            });
             var str_cat='';
             for(i=0;i<len;i++){
               var temp_dict=stored_list[i];
@@ -156,30 +196,35 @@
           <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+temp_dict['category']+`</h3></label><br></div>`
             }
             document.getElementById('collapseExample3').innerHTML+=str_cat;
-            // console.log(str_cat);
-  
+          
 
-            // $('.del').click(function() {
 
-            //    var index=$(this).attr('id');
-            //    console.log('hello');
-            //     console.log(stored_list);
+                $('#update_form').submit(update_fun);
+                function update_fun(e){
+                  console.log("hello");
+                  e.preventDefault();
+                  var update_values = $('#update_form').serializeArray();
+                  var str_len=(len).toString();
+                  var id=update_values[0]['value']
+                  var new_username=update_values[1]['value']
+                  var new_category=update_values[2]['value']
+                  console.log(stored_list);
+                  
+                  console.log(len);
+                if(id>len){
+                  alert("Invalid Id");
+                }else{
                
+                  var dict={'username':new_username,'category':new_category};
 
-            //    // var rem=stored_list.spliced(index,1);
-            //    //  console.log(stored_list);
-                
-            //    // document.getElementById('tbody').innerHTML='';
-            //    // var len=stored_list.length;
-             
-            //    // for(i=0;i<len;i++){
-            //    //          var temp_dict=stored_list[i];
-            //    //          var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
-            //    //          document.getElementById('tbody').innerHTML+=str;
+                  stored_list[id-1]=dict;
+                   window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+                   location.reload();
 
-            //    //  }
-            //    //  window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
-            // });
+
+                }
+              }
+
 
             $('#form').submit(addFun);
             function addFun(e){
@@ -196,6 +241,7 @@
                 stored_list.push(dict);
                 window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
                 len++;
+                location.reload();
             }
             $('.del').click(remove);
             function remove(){
@@ -220,8 +266,10 @@
 
                 }
                 window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+                    location.reload();
             }
             $('#cat-button').click(function(click) {
+
               click.preventDefault();
               console.log("hello");
               var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
@@ -241,7 +289,7 @@
                 }
               }
             
-          
+               $('.del').click(remove);
 
             }); 
               
