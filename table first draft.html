@@ -230,12 +230,13 @@
               var cat_selected=$("input[name='customRadio']:checked").val();
               len=stored_list.length;
                     
-                   
+              var count=0;
               for(i=0;i<len;i++){
                     var temp_dict=stored_list[i];
                     if(temp_dict['category']==cat_selected){
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        var str=`<tr><th scope="row">`+(count+1).toString()+`</th><td>`+temp_dict['username']+`</td>+<td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
                         document.getElementById('tbody').innerHTML+=str;
+                        count++;
 
                 }
               }
