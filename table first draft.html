@@ -17,7 +17,7 @@
     }
   </style>
 
-    <title>Hello, world!</title>
+    <title>Tabulate</title>
   </head>
   <body>
 <div class="container" >
@@ -30,7 +30,7 @@
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >
     Fill
   </button>
-  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" >
+  <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" id="filter">
     Filter by Categories
   </button>
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4" >
@@ -206,6 +206,8 @@
                   location.reload()
             });
 
+            $('#filter').click(function() {
+            	document.getElementById('collapseExample3').innerHTML="";
 
             var str_cat='';
             var arr_cat=[];
@@ -222,6 +224,8 @@
           <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+unique[i]+`</h3></label><br></div>`
             }
             document.getElementById('collapseExample3').innerHTML+=str_cat;
+
+             });
           
 
 
