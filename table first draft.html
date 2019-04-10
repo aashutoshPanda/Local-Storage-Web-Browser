@@ -130,7 +130,7 @@
               <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
       </div> -->
         
-         <button  class="btn btn-primary" id="cat_button">Filter</button>   
+           
   </form>
 </div>
 
@@ -198,7 +198,8 @@
                    
                     for(i=0;i<len;i++){
                         var temp_dict=stored_list[i];
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="submit!"
+  /></td></tr>`
                         document.getElementById('tbody').innerHTML+=str;
 
                     }
@@ -226,7 +227,30 @@
               str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+unique[i]+`">
           <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+unique[i]+`</h3></label><br></div>`
             }
+            str_cat+=`<button  class="btn btn-primary" id="cat_button">Filter</button> `;
             document.getElementById('collapseExample3').innerHTML+=str_cat;
+             $('#cat_button').click(function(click) {
+
+
+              click.preventDefault();
+        
+              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+              document.getElementById('tbody').innerHTML='';
+              
+              var cat_selected=$("input[name='customRadio']:checked").val();
+              len=stored_list.length;
+                    
+              var count=0;
+              for(i=0;i<len;i++){
+                    var temp_dict=stored_list[i];
+                    if(temp_dict['category']==cat_selected){
+                        var str=`<tr><th scope="row">`+(count+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
+                        document.getElementById('tbody').innerHTML+=str;
+                        count++;
+
+                }
+              }  }); 
+
 
              });
           
@@ -278,9 +302,8 @@
                       location.reload();
                
             }
-            $('.del').click(remove);
-            function remove(){
-              console.log("hi");
+            $('.del').click(function(event) {
+            	console.log("hi");
               var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
    
                var index=$(this).attr('id');
@@ -302,33 +325,16 @@
                 }
                 window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
                     location.reload();
-            }
-            $('#cat_button').click(function(click) {
-
-
-              click.preventDefault();
-        
-              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
-              document.getElementById('tbody').innerHTML='';
+            });
+   
               
-              var cat_selected=$("input[name='customRadio']:checked").val();
-              len=stored_list.length;
-                    
-              var count=0;
-              for(i=0;i<len;i++){
-                    var temp_dict=stored_list[i];
-                    if(temp_dict['category']==cat_selected){
-                        var str=`<tr><th scope="row">`+(count+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><button id="`+(i+1).toString()+`" class="del">X</button></td></tr>`
-                        document.getElementById('tbody').innerHTML+=str;
-                        count++;
-
-                }
-              }
+         
+           
             
-              $('#collapseExample3').toggleClass('show');
+              // $('#collapseExample3').toggleClass('show');
                $('.del').click(remove);
 
-            }); 
+          
               
 
    </script>
