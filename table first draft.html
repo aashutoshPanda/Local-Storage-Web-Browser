@@ -8,11 +8,19 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="animate.css">
+
+  <style type="text/css">
+    body{
+      background-color: #ffffff;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 200 200'%3E%3Cpolygon fill='%23DCEFFA' points='100 0 0 100 100 100 100 200 200 100 200 0'/%3E%3C/svg%3E");
+    }
+  </style>
 
     <title>Hello, world!</title>
   </head>
   <body>
-<div class="container">
+<div class="container" >
 
     <p>
 
@@ -20,7 +28,7 @@
     Table
   </button>
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2" >
-    Form
+    Fill
   </button>
   <button class="btn btn-primary btn-lg" type="button" data-toggle="collapse" data-target="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3" >
     Filter by Categories
@@ -32,9 +40,9 @@
  
 </p>
 
-<div class="collapse  show" id="collapseExample">
+<div class="collapse  show wow slideoutRight" id="collapseExample">
      <!--  Table -->
-  <div class="card card-body">
+  <div class="card card-body wow fadeInUpBig" id="main_table">
     <h1 style="text-align: center;">TABLE</h1>
     <button  class="btn btn-primary btn-lg" id="remove_filter">Remove category filter</button>
     <br>
@@ -64,7 +72,7 @@
   </div>
 </div>
       <!-- Form -->
-<div class="collapse" id="collapseExample2">
+<div class="collapse  wow slideoutRight" id="collapseExample2">
   <div class="card card-body">
     <h1 style="text-align: center;">FORM</h1>
        <!--  <form id="form">
@@ -88,13 +96,15 @@
         <form id="form">
           <div class="form-group">
                 <label for="input2">Username</label>
-                <input  class="form-control" name='username' id="username" placeholder="Username">
+                <input  class="form-control" name='username' id="username" required placeholder="Username" oninvalid="this.setCustomValidity('Enter User Name Here')"
+                              oninput="this.setCustomValidity('')">
               </div>
 
 
               <div class="form-group">
                 <label for="input1">Category</label>
-                <input class="form-control" id="category" name='category' placeholder="Category">
+                <input class="form-control" id="category" name='category' required placeholder="Category" oninvalid="this.setCustomValidity('Enter Category Here')"
+                              oninput="this.setCustomValidity('')">
                 
               </div>
               
@@ -108,7 +118,7 @@
   </div>
 </div>
 
-<div class="collapse" id="collapseExample3" >
+<div class="collapse wow slideoutRight" id="collapseExample3" >
   <h1 style="text-align: center;">CATEGORIES</h1>
   <form id="cat_form">
         <!-- <div class="custom-control custom-radio">
@@ -120,14 +130,14 @@
               <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
       </div> -->
         
-         <button type="submit" class="btn btn-primary" id="cat-button">Submit</button>   
+         <button  class="btn btn-primary" id="cat_button">Filter</button>   
   </form>
 </div>
 
-</div>
 
-<div class="collapse" id="collapseExample4">
-  <div class="container">
+
+<div class="collapse wow slideoutRight" id="collapseExample4">
+
    <form id="update_form">
         <div class="form-group row">
           <label  class="col-sm-2 col-form-label">Enter Id to Update</label>
@@ -153,15 +163,21 @@
           </div>
         </div>
       </form>
-      </div>
+    
     </div>
+ 
   </div>
+   </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="wow.min.js"></script>
+              <script>
+              new WOW().init();
+              </script>
    <script type="text/javascript">
               // window.localStorage.clear();
 
@@ -189,11 +205,21 @@
             $("#remove_filter").click(function() {
                   location.reload()
             });
+
+
             var str_cat='';
+            var arr_cat=[];
             for(i=0;i<len;i++){
-              var temp_dict=stored_list[i];
-              str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+temp_dict['category']+`">
-          <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+temp_dict['category']+`</h3></label><br></div>`
+            	var temp_dict=stored_list[i]
+            	arr_cat.push(temp_dict['category']);
+            }
+            let unique = [...new Set(arr_cat)];
+        	var uni_len=unique.length;
+
+            for(i=0;i<uni_len;i++){
+             
+              str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+unique[i]+`">
+          <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+unique[i]+`</h3></label><br></div>`
             }
             document.getElementById('collapseExample3').innerHTML+=str_cat;
           
@@ -233,15 +259,17 @@
                 var values = $('#form').serializeArray();
               len=stored_list.length;
                 var str_len=(len).toString();
-                var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td><td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
-                document.getElementById('tbody').innerHTML+=str;
-                
-                var dict={'username':values[0]['value'],'category':values[1]['value']};
+        
+                      var str=`<tr><th scope="row">`+str_len+`</th><td>`+values[0]['value']+`</td><td>`+values[1]['value']+`</td><td><button id="`+str_len+`" class="del">X</button></td></tr>`
+                      document.getElementById('tbody').innerHTML+=str;
+                      
+                      var dict={'username':values[0]['value'],'category':values[1]['value']};
+                     
+                      stored_list.push(dict);
+                      window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+                      len++;
+                      location.reload();
                
-                stored_list.push(dict);
-                window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
-                len++;
-                location.reload();
             }
             $('.del').click(remove);
             function remove(){
@@ -268,10 +296,11 @@
                 window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
                     location.reload();
             }
-            $('#cat-button').click(function(click) {
+            $('#cat_button').click(function(click) {
+
 
               click.preventDefault();
-              console.log("hello");
+        
               var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
               document.getElementById('tbody').innerHTML='';
               
@@ -289,6 +318,7 @@
                 }
               }
             
+              $('#collapseExample3').toggleClass('show');
                $('.del').click(remove);
 
             }); 
