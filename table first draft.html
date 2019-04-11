@@ -2,11 +2,10 @@
 <html lang="en">
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Required meta tags -->
+ 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="animate.css">
 
@@ -41,7 +40,7 @@
 </p>
 
 <div class="collapse  show wow slideoutRight" id="collapseExample">
-     <!--  Table -->
+     
   <div class="card card-body wow fadeInUpBig" id="main_table">
     <h1 style="text-align: center;">TABLE</h1>
     <button  class="btn btn-primary btn-lg" id="remove_filter">Remove category filter</button>
@@ -58,41 +57,17 @@
      </tr>
   </thead>
   <tbody id='tbody'>
-    
-    <!-- <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-
-    </tr> -->
-  
+     
   </tbody>
 </table>
 
   </div>
 </div>
-      <!-- Form -->
+  
 <div class="collapse  wow slideoutRight" id="collapseExample2">
   <div class="card card-body">
     <h1 style="text-align: center;">FORM</h1>
-       <!--  <form id="form">
-         
-
-              <div class="form-group">
-                <label>Username</label>
-                <input class="form-control" id="username" name='username' placeholder="Name">
-                
-              </div>
-              <div class="form-group">
-                <label >Category</label>
-                <input class="form-control" id="category" name='category' placeholder="Category">
-                
-              </div>
-
-            
-              
-              <button type="submit" class="btn btn-primary">Submit</button>
-        </form> -->
+      
         <form id="form">
           <div class="form-group">
                 <label for="input2">Username</label>
@@ -121,14 +96,6 @@
 <div class="collapse wow slideoutRight" id="collapseExample3" >
   <h1 style="text-align: center;">CATEGORIES</h1>
   <form id="cat_form">
-        <!-- <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-              <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
-      </div>
-      <div class="custom-control custom-radio">
-              <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-              <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
-      </div> -->
         
            
   </form>
@@ -172,175 +139,128 @@
   </div>
    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="wow.min.js"></script>
+    <script src="wow.min.js"></script>
               <script>
               new WOW().init();
               </script>
-   <script type="text/javascript">
-              // window.localStorage.clear();
+<script type="text/javascript">
+  // window.localStorage.clear();
 
 
-              var len;
-            var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
-              // console.log(stored_list);
+                                    //for loading the table on reload
+var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
    
-                if(stored_list==null){
-                  
-                  stored_list=[]
-                }else{
-                    len=stored_list.length;
-                    
-                   
-                    for(i=0;i<len;i++){
-                        var temp_dict=stored_list[i];
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
-  /></td></tr>`
-                        document.getElementById('tbody').innerHTML+=str;
-
-                    }
-                }
+if(stored_list==null){
+  stored_list=[]
+}else{
+  len=stored_list.length;
+    for(i=0;i<len;i++){
+        var temp_dict=stored_list[i];
+        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
+        /></td></tr>`
+        document.getElementById('tbody').innerHTML+=str;
+    }
+}
               
-   
-            $("#remove_filter").click(function() {
-                  location.reload()
-            });
+                                          //removes category dilter to show entire table 
+$("#remove_filter").click(function() {
+  location.reload()
+});
+                                          //filters the table by selected category
+$('#filter').click(function() {
+  document.getElementById('collapseExample3').innerHTML="";
+  var str_cat='';
+  var arr_cat=[];
+  for(i=0;i<len;i++){
+    var temp_dict=stored_list[i]
+    arr_cat.push(temp_dict['category']);
+    }                                             
+                                              //for giving options of category
+  let unique = [...new Set(arr_cat)];
+  var uni_len=unique.length;
+  for(i=0;i<uni_len;i++){
+    str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+unique[i]+`"><label class="custom-control-label" for="customRadio`+(i+1).toString()+`"><h3 sytyle="font-weight:500;">`+unique[i]+`</h3></label></div>`
+      }
+  str_cat+=`<button  class="btn btn-primary" id="cat_button">Filter</button> `;
+  document.getElementById('collapseExample3').innerHTML+=str_cat;
 
-            $('#filter').click(function() {
-            	document.getElementById('collapseExample3').innerHTML="";
-
-            var str_cat='';
-            var arr_cat=[];
-            for(i=0;i<len;i++){
-            	var temp_dict=stored_list[i]
-            	arr_cat.push(temp_dict['category']);
-            }
-            let unique = [...new Set(arr_cat)];
-        	var uni_len=unique.length;
-
-            for(i=0;i<uni_len;i++){
-             
-              str_cat+=`<div class="custom-control custom-radio" ><input type="radio" id="customRadio`+(i+1).toString()+`" name="customRadio" class="custom-control-input" value="`+unique[i]+`">
-          <label class="custom-control-label" for="customRadio`+(i+1).toString()+`">`+`<h3 sytyle="font-weight:500;">`+unique[i]+`</h3></label><br></div>`
-            }
-            str_cat+=`<button  class="btn btn-primary" id="cat_button">Filter</button> `;
-            document.getElementById('collapseExample3').innerHTML+=str_cat;
-             $('#cat_button').click(function(click) {
-
-
-              click.preventDefault();
-        
-              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
-              document.getElementById('tbody').innerHTML='';
-              
-              var cat_selected=$("input[name='customRadio']:checked").val();
-              len=stored_list.length;
-                    
-              var count=0;
-              for(i=0;i<len;i++){
-                    var temp_dict=stored_list[i];
-                    if(temp_dict['category']==cat_selected){
-                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
+                                        //to show filtered result
+  $('#cat_button').click(function(click) {
+  click.preventDefault();
+  var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+  document.getElementById('tbody').innerHTML='';
+  var cat_selected=$("input[name='customRadio']:checked").val();
+  len=stored_list.length;
+  var count=0;
+  for(i=0;i<len;i++){
+    var temp_dict=stored_list[i];
+    if(temp_dict['category']==cat_selected){
+        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
   /></td></tr>`
-                        document.getElementById('tbody').innerHTML+=str;
-                        count++;
+        document.getElementById('tbody').innerHTML+=str;
+        count++;
+    }
+  }  
+}); 
 
-                }
-              }  }); 
-
-
-             });
           
 
+                                            //to update the table entries
+$('#update_form').submit(update_fun);
+  function update_fun(e){
+  e.preventDefault();
+  var update_values = $('#update_form').serializeArray();
+  var str_len=(len).toString();
+  var id=update_values[0]['value']
+  var new_username=update_values[1]['value']
+  var new_category=update_values[2]['value']
+  if(id>len || id<=0){
+    alert("Invalid Id");
+  }else{
+    var dict={'username':new_username,'category':new_category};
+    stored_list[id-1]=dict;
+    window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+    location.reload();
+    }
+}
+});
 
-                $('#update_form').submit(update_fun);
-                function update_fun(e){
-                  console.log("hello");
-                  e.preventDefault();
-                  var update_values = $('#update_form').serializeArray();
-                  var str_len=(len).toString();
-                  var id=update_values[0]['value']
-                  var new_username=update_values[1]['value']
-                  var new_category=update_values[2]['value']
-                  console.log(stored_list);
-                  
-                  console.log(len);
-                if(id>len || id<=0){
-                  alert("Invalid Id");
-                }else{
-               
-                  var dict={'username':new_username,'category':new_category};
+                                //to add new entries
 
-                  stored_list[id-1]=dict;
-                   window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
-                   location.reload();
+$('#form').submit(addFun);
 
+  function addFun(e){
+  e.preventDefault();
+  var values = $('#form').serializeArray();
+  len=stored_list.length;
+  var str_len=(len).toString();
+  var dict={'username':values[0]['value'],'category':values[1]['value']};
+  stored_list.push(dict);
+  console.log(stored_list);
+  window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+  len++;
+  location.reload();
+   }
+                                        // to delete an entry
 
-                }
-              }
-
-
-            $('#form').submit(addFun);
-            function addFun(e){
-
-                e.preventDefault();
-                var values = $('#form').serializeArray();
-              len=stored_list.length;
-                var str_len=(len).toString();
-        
-  //                     var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
-  // /></td></tr>`
-  //                     document.getElementById('tbody').innerHTML+=str;
-                      
-                      var dict={'username':values[0]['value'],'category':values[1]['value']};
-                     
-                      stored_list.push(dict);
-                      window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
-                      len++;
-                      location.reload();
-               
-            }
-            $('.del').click(function(event) {
-            	console.log("hi");
-              var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+$('.del').click(function(event) {
+  var stored_list=JSON.parse(window.localStorage.getItem('s_s_list'));
+  var index=$(this).attr('id');
+  var rem=stored_list.splice(index-1,1);
+  window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
+  location.reload();
+});
    
-               var index=$(this).attr('id');
-               // console.log(index,"index hai");
-               //  console.log(stored_list);
-               
 
-               var rem=stored_list.splice(index-1,1);
-              
-                
-  //              document.getElementById('tbody').innerHTML='';
-  //              var len=stored_list.length;
-             
-  //              for(i=0;i<len;i++){
-  //                       var temp_dict=stored_list[i];
-  //                        var str=`<tr><th scope="row">`+(i+1).toString()+`</th><td>`+temp_dict['username']+`</td><td>`+temp_dict['category']+`</td><td><input id="`+(i+1).toString()+`" class="del" type="image" src="trash-icon.jpg" width="35" height="25" alt="X"
-  // /></td></tr>`
-  //                       document.getElementById('tbody').innerHTML+=str;
-
-  //               }
-                window.localStorage.setItem('s_s_list', JSON.stringify(stored_list));
-                    location.reload();
-            });
-   
-              
-         
-           
-            
-              // $('#collapseExample3').toggleClass('show');
-               $('.del').click(remove);
 
           
               
+</script>
 
-   </script>
-
-  </body>
+</body>
 </html>
